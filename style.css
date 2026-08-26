@@ -1,0 +1,333 @@
+/* ---------------------------------------------------------
+   VARIABLES — toutes les couleurs du projet sont ici.
+   Changer une ligne ici change toute l'application.
+   --------------------------------------------------------- */
+:root {
+  --fond:          #F5F4F1;
+  --surface:       #FFFFFF;
+  --texte:         #1A1A18;
+  --texte-doux:    #6B6B66;
+  --bordure:       #DEDDD8;
+  --accent:        #1F5E4A;
+  --accent-fond:   #E4EFEA;
+  --erreur:        #B3261E;
+
+  --rayon: 10px;
+  --cible: 52px;        /* hauteur mini d'une zone tapable */
+}
+
+/* Mode sombre : le téléphone applique ces valeurs
+   automatiquement si le thème système est sombre. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond:        #17171A;
+    --surface:     #212126;
+    --texte:       #F0EFEC;
+    --texte-doux:  #9A9A95;
+    --bordure:     #35353C;
+    --accent:      #4FBF97;
+    --accent-fond: #1E3A32;
+    --erreur:      #F2B8B5;
+  }
+}
+
+/* ---------------------------------------------------------
+   BASE
+   --------------------------------------------------------- */
+* {
+  box-sizing: border-box;              /* padding inclus dans la largeur */
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0 16px calc(96px + env(safe-area-inset-bottom));
+  background: var(--fond);
+  color: var(--texte);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 8px;
+}
+
+.entete h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.lien {
+  background: none;
+  border: 0;
+  padding: 8px;
+  margin: -8px;
+  color: var(--accent);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.bloc { margin-bottom: 22px; }
+
+.label {
+  margin: 0 0 8px;
+  color: var(--texte-doux);
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------
+   LE MONTANT — l'élément dominant de l'écran
+   --------------------------------------------------------- */
+.bloc-montant {
+  text-align: center;
+  padding: 18px 0 4px;
+}
+
+.saisie-montant {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+}
+
+#montant {
+  width: 190px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 46px;
+  font-weight: 500;
+  text-align: right;
+  outline: none;
+}
+
+#montant::placeholder { color: var(--bordure); }
+
+.devise {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--texte-doux);
+}
+
+.lien-date {
+  background: none;
+  border: 0;
+  margin-top: 6px;
+  padding: 6px;
+  color: var(--texte-doux);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.champ-date {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--accent);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 15px;
+}
+
+/* ---------------------------------------------------------
+   LES GRILLES DE BOUTONS
+   --------------------------------------------------------- */
+.grille {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.grille-2 { grid-template-columns: repeat(2, 1fr); }
+.grille-3 { grid-template-columns: repeat(3, 1fr); }
+.grille-4 { grid-template-columns: repeat(4, 1fr); }
+
+.choix {
+  min-height: var(--cible);
+  padding: 8px 4px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+/* L'état sélectionné se lit directement dans le HTML,
+   via aria-pressed. Pas besoin de classe supplémentaire. */
+.choix[aria-pressed="true"] {
+  background: var(--accent-fond);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.choix:active { transform: scale(0.97); }
+
+/* Un bouton qui occupe toute la largeur de sa grille,
+   quel que soit le nombre de colonnes. */
+.pleine-ligne { grid-column: 1 / -1; }
+
+/* ---------------------------------------------------------
+   CHAMPS TEXTE
+   --------------------------------------------------------- */
+.champ-texte {
+  width: 100%;
+  min-height: var(--cible);
+  padding: 0 14px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 16px;          /* sous 16px, Android zoome à la sélection */
+  outline: none;
+}
+
+.champ-texte:focus { border-color: var(--accent); }
+.champ-texte::placeholder { color: var(--texte-doux); }
+
+/* ---------------------------------------------------------
+   BOUTON D'ENREGISTREMENT — collé en bas de l'écran
+   --------------------------------------------------------- */
+.pied {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: var(--fond);
+  border-top: 1px solid var(--bordure);
+}
+
+/* ---------------------------------------------------------
+   BOUTONS SECONDAIRES (sauvegarde)
+   Classe distincte de .choix : ces boutons ne font pas
+   partie d'un groupe de sélection.
+   --------------------------------------------------------- */
+.bouton-secondaire {
+  min-height: 46px;
+  padding: 8px 6px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.bouton-secondaire:active { background: var(--bordure); }
+
+/* ---------------------------------------------------------
+   LISTE DES DERNIÈRES DÉPENSES
+   --------------------------------------------------------- */
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ligne {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  margin-bottom: 6px;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--surface);
+}
+
+.ligne-texte {
+  flex: 1;
+  min-width: 0;                 /* autorise le texte à se tronquer */
+}
+
+.ligne-titre {
+  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ligne-date {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--texte-doux);
+}
+
+.ligne-montant {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.supprimer {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texte-doux);
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.supprimer:active { background: var(--bordure); }
+
+.vide {
+  padding: 14px 0;
+  color: var(--texte-doux);
+  font-size: 14px;
+  text-align: center;
+}
+
+.message {
+  min-height: 17px;
+  margin: 0 0 8px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--erreur);
+}
+
+.message.ok { color: var(--accent); }
+
+.bouton-principal {
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: var(--rayon);
+  background: var(--accent);
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.bouton-principal:active { transform: scale(0.99); }
+
+/* Accessibilité clavier : contour visible à la tabulation */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

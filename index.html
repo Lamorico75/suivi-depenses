@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1F5E4A">
+  <title>Dépenses</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icone-192.png">
+</head>
+<body>
+
+  <header class="entete">
+    <h1>Nouvelle dépense</h1>
+    <button type="button" id="btn-analyse" class="lien">Analyse</button>
+  </header>
+
+  <main>
+
+    <!-- 1. LE MONTANT -->
+    <section class="bloc bloc-montant">
+      <div class="saisie-montant">
+        <input type="text" id="montant" inputmode="decimal" placeholder="0,00" autocomplete="off">
+        <span class="devise">€</span>
+      </div>
+      <button type="button" id="date-affichee" class="lien-date">aujourd'hui</button>
+      <input type="datetime-local" id="date-modif" class="champ-date" hidden>
+    </section>
+
+    <!-- 2. OBLIGATOIRE OU NON -->
+    <section class="bloc">
+      <div class="grille grille-2">
+        <button type="button" class="choix" data-groupe="type" data-value="non_obligatoire" aria-pressed="true">Non obligatoire</button>
+        <button type="button" class="choix" data-groupe="type" data-value="obligatoire" aria-pressed="false">Obligatoire</button>
+      </div>
+    </section>
+
+    <!-- 3a. CHAMPS DES DÉPENSES NON OBLIGATOIRES -->
+    <section class="bloc" id="champs-non-obligatoire">
+
+      <p class="label">Quoi</p>
+      <div class="grille grille-3">
+        <button type="button" class="choix" data-groupe="quoi" data-value="restaurant" aria-pressed="false">Restaurant</button>
+        <button type="button" class="choix" data-groupe="quoi" data-value="bar" aria-pressed="false">Bar</button>
+        <button type="button" class="choix" data-groupe="quoi" data-value="course" aria-pressed="false">Course</button>
+        <button type="button" class="choix" data-groupe="quoi" data-value="vetement" aria-pressed="false">Vêtement</button>
+        <button type="button" class="choix" data-groupe="quoi" data-value="equipement" aria-pressed="false">Équipement</button>
+        <button type="button" class="choix" data-groupe="quoi" data-value="moto" aria-pressed="false">Moto</button>
+        <button type="button" class="choix pleine-ligne" data-groupe="quoi" data-value="autre" aria-pressed="false">Autre</button>
+      </div>
+
+      <p class="label">Pour qui</p>
+      <div class="grille grille-4">
+        <button type="button" class="choix" data-groupe="pour_qui" data-value="perso" aria-pressed="false">Perso</button>
+        <button type="button" class="choix" data-groupe="pour_qui" data-value="antonin" aria-pressed="false">Antonin</button>
+        <button type="button" class="choix" data-groupe="pour_qui" data-value="ophelie" aria-pressed="false">Ophélie</button>
+        <button type="button" class="choix" data-groupe="pour_qui" data-value="autre" aria-pressed="false">Autre</button>
+      </div>
+
+    </section>
+
+    <!-- 3b. CHAMPS DES DÉPENSES OBLIGATOIRES -->
+    <section class="bloc" id="champs-obligatoire" hidden>
+      <p class="label">Titre</p>
+      <input type="text" id="titre" class="champ-texte" list="titres-connus" placeholder="Loyer, assurance, abonnement…" autocomplete="off">
+      <datalist id="titres-connus"></datalist>
+    </section>
+
+    <!-- 4. NOTE FACULTATIVE -->
+    <section class="bloc">
+      <input type="text" id="note" class="champ-texte" placeholder="Note (facultatif)" autocomplete="off">
+    </section>
+
+    <!-- 5. DERNIÈRES DÉPENSES ENREGISTRÉES -->
+    <section class="bloc">
+      <p class="label">Dernières dépenses</p>
+      <ul id="liste-depenses" class="liste"></ul>
+    </section>
+
+    <!-- 6. SAUVEGARDE -->
+    <section class="bloc">
+      <p class="label">Sauvegarde</p>
+      <div class="grille grille-2">
+        <button type="button" id="exporter" class="bouton-secondaire">Exporter</button>
+        <button type="button" id="importer" class="bouton-secondaire">Importer</button>
+      </div>
+      <input type="file" id="fichier-import" accept="application/json,.json" hidden>
+    </section>
+
+  </main>
+
+  <!-- 7. VALIDATION -->
+  <footer class="pied">
+    <p id="message" class="message"></p>
+    <button type="button" id="enregistrer" class="bouton-principal">Enregistrer</button>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
