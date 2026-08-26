@@ -214,6 +214,28 @@ body {
 }
 
 /* ---------------------------------------------------------
+   SAUVEGARDE REPLIÉE
+   --------------------------------------------------------- */
+.bloc-sauvegarde {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.lien-discret {
+  padding: 10px;
+  border: 0;
+  background: none;
+  color: var(--texte-doux);
+  font-family: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+#zone-sauvegarde { margin-top: 10px; }
+
+/* ---------------------------------------------------------
    BOUTONS SECONDAIRES (sauvegarde)
    Classe distincte de .choix : ces boutons ne font pas
    partie d'un groupe de sélection.
