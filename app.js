@@ -17,11 +17,19 @@ const listeTitres = document.getElementById("titres-connus");
 const boutonExporter = document.getElementById("exporter");
 const boutonImporter = document.getElementById("importer");
 const champFichier = document.getElementById("fichier-import");
+const boutonBasculerSauvegarde = document.getElementById("basculer-sauvegarde");
+const zoneSauvegarde = document.getElementById("zone-sauvegarde");
 
 /* Numéro de version du format de sauvegarde. Il sera utile
    le jour où le modèle de données changera : on saura lire
    les anciens fichiers au lieu de les refuser. */
 const FORMAT_SAUVEGARDE = 1;
+
+/* Nombre de dépenses affichées sous le formulaire. Volontairement
+   bas : cette liste sert à vérifier et à corriger la saisie qu'on
+   vient de faire, pas à consulter l'historique. Celui-ci vivra
+   dans l'écran d'analyse. */
+const DERNIERES_AFFICHEES = 3;
 
 /* =========================================================
    2. L'ÉTAT DE LA SAISIE EN COURS
@@ -242,7 +250,7 @@ function reinitialiser() {
    9. LISTE DES DERNIÈRES DÉPENSES
    ========================================================= */
 async function rafraichirListe() {
-  const dernieres = await listerDepenses(10);
+  const dernieres = await listerDepenses(DERNIERES_AFFICHEES);
   listeDepenses.innerHTML = "";
 
   if (dernieres.length === 0) {
@@ -301,6 +309,14 @@ function nomDuJour() {
   const deuxChiffres = (n) => String(n).padStart(2, "0");
   return d.getFullYear() + "-" + deuxChiffres(d.getMonth() + 1) + "-" + deuxChiffres(d.getDate());
 }
+
+/* Le bloc de sauvegarde est replié par défaut : il sert une
+   fois par mois, il n'a pas à concurrencer la saisie. */
+boutonBasculerSauvegarde.addEventListener("click", () => {
+  const ouvert = zoneSauvegarde.hidden;
+  zoneSauvegarde.hidden = !ouvert;
+  boutonBasculerSauvegarde.setAttribute("aria-expanded", String(ouvert));
+});
 
 boutonExporter.addEventListener("click", async () => {
   try {
