@@ -34,6 +34,12 @@
 /* ---------------------------------------------------------
    BASE
    --------------------------------------------------------- */
+/* L'attribut hidden doit toujours l'emporter. Sans cette règle,
+   une classe qui définit un display (grid, flex...) écrase le
+   display:none par défaut du navigateur, et l'élément reste
+   visible alors que le HTML le déclare masqué. */
+[hidden] { display: none !important; }
+
 * {
   box-sizing: border-box;              /* padding inclus dans la largeur */
   -webkit-tap-highlight-color: transparent;
