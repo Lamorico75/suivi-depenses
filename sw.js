@@ -9,7 +9,7 @@
    d'afficher l'ancienne version, indéfiniment.
    ========================================================= */
 
-const VERSION = "v6";
+const VERSION = "v7";
 const CACHE = "depenses-" + VERSION;
 
 const FICHIERS = [

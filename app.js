@@ -161,14 +161,41 @@ function decrire(depense) {
 }
 
 /* =========================================================
-   6. LECTURE DU MONTANT
-   Renvoie un nombre, ou null si la saisie est inutilisable.
+   6. SAISIE DU MONTANT
+   Le montant est tenu en centimes, sous forme de nombre entier.
+   L'utilisateur ne tape que des chiffres : ils se remplissent
+   depuis la droite et la virgule se place toute seule.
+   Travailler en entiers supprime au passage les erreurs
+   d'arrondi des nombres à virgule.
    ========================================================= */
+let centimes = 0;
+
+const MAX_CHIFFRES = 9; /* jusqu'à 9 999 999,99 */
+
+function afficherMontantSaisi() {
+  if (centimes === 0) {
+    champMontant.value = "";
+    return;
+  }
+  champMontant.value = (centimes / 100).toLocaleString("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+/* À chaque frappe, on ne retient que les chiffres et on
+   reconstruit l'affichage. La correction arrière fonctionne
+   naturellement : elle retire le dernier chiffre. */
+champMontant.addEventListener("input", () => {
+  const chiffres = champMontant.value.replace(/\D/g, "").slice(0, MAX_CHIFFRES);
+  centimes = chiffres === "" ? 0 : parseInt(chiffres, 10);
+  afficherMontantSaisi();
+  effacerMessage();
+});
+
 function lireMontant() {
-  const brut = champMontant.value.trim().replace(",", ".");
-  const valeur = parseFloat(brut);
-  if (!isFinite(valeur) || valeur <= 0) return null;
-  return Math.round(valeur * 100) / 100;
+  if (centimes <= 0) return null;
+  return centimes / 100;
 }
 
 /* =========================================================
@@ -231,6 +258,7 @@ boutonEnregistrer.addEventListener("click", async () => {
    on saisit souvent plusieurs dépenses de même nature à la suite.
    ========================================================= */
 function reinitialiser() {
+  centimes = 0;
   champMontant.value = "";
   champTitre.value = "";
   champNote.value = "";
