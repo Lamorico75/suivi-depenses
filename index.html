@@ -81,9 +81,11 @@
     <!-- 6. SAUVEGARDE (repliée : usage mensuel, pas quotidien) -->
     <section class="bloc bloc-sauvegarde">
       <button type="button" id="basculer-sauvegarde" class="lien-discret" aria-expanded="false">Sauvegarde</button>
-      <div id="zone-sauvegarde" class="grille grille-2" hidden>
-        <button type="button" id="exporter" class="bouton-secondaire">Exporter</button>
-        <button type="button" id="importer" class="bouton-secondaire">Importer</button>
+      <div id="zone-sauvegarde" hidden>
+        <div class="grille grille-2">
+          <button type="button" id="exporter" class="bouton-secondaire">Exporter</button>
+          <button type="button" id="importer" class="bouton-secondaire">Importer</button>
+        </div>
       </div>
       <input type="file" id="fichier-import" accept="application/json,.json" hidden>
     </section>
